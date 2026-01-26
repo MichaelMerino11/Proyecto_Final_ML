@@ -11,8 +11,8 @@ class ControlledOnlineKMeans:
     def __init__(self, n_clusters: int, random_state: int = 42):
         self.n_clusters = n_clusters
         self.random_state = random_state
-        self.centroids = None   # (k, d)
-        self.counts = None      # tamaño por cluster
+        self.centroids = None
+        self.counts = None
 
     def init_random(self, X: np.ndarray):
         rng = np.random.default_rng(self.random_state)

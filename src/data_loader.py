@@ -7,13 +7,13 @@ def get_prepared_data():
     Carga el dataset Iris y lo normaliza. 
     Retorna los datos X (características) y y (clases reales).
     """
-    # Cargamos el dataset Iris (Meta 1: Análisis de instancias y clases) 
+    # Cargamos el dataset Iris
     iris = load_iris()
     X = iris.data
     y = iris.target
     target_names = iris.target_names
 
-    # Escalado de datos: Vital para algoritmos basados en distancia
+    # Escalado de datos
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     

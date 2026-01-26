@@ -21,9 +21,7 @@ def main():
 
     results = []
 
-    # -----------------------------------------
     # A) Baseline: online SIN restricción (random init)
-    # -----------------------------------------
     model_online = ControlledOnlineKMeans(n_clusters=k, random_state=42)
     model_online.init_random(X)
     y_pred_online = model_online.fit_predict_stream(X, max_size=None)
@@ -32,9 +30,7 @@ def main():
     results.append({"model": "online_controlled_no_constraint", **m_online})
     print("✅ Online controlado SIN restricción:", m_online)
 
-    # -----------------------------------------
     # B) Online + restricción (random init)
-    # -----------------------------------------
     model_con = ControlledOnlineKMeans(n_clusters=k, random_state=42)
     model_con.init_random(X)
     y_pred_con = model_con.fit_predict_stream(X, max_size=max_size)
@@ -49,9 +45,7 @@ def main():
         raise RuntimeError("❌ Se violó la restricción de tamaño.")
     print("✅ Restricción cumplida (0 violaciones).")
 
-    # -----------------------------------------
     # C) Semi-supervisado + restricción (seed por clase)
-    # -----------------------------------------
     for per_class in [2, 5, 10]:
         labeled_idx = stratified_seed_indices(y, per_class=per_class, random_state=42)
         seed_centroids = centroids_from_labeled(X, y, labeled_idx, n_clusters=k)
@@ -69,9 +63,7 @@ def main():
         if (model_semi.counts > max_size).any():
             raise RuntimeError("❌ Violación de tamaño en semi-supervisado.")
 
-    # -----------------------------------------
     # Guardar resultados
-    # -----------------------------------------
     df = pd.DataFrame(results)
     out_path = "results/tables/final_results.csv"
     df.to_csv(out_path, index=False)
